@@ -11,8 +11,15 @@ class Route(BaseModel):
     destination: str
 
 
+class AuthConfig(BaseModel):
+    # Если адрес не указан, считаем
+    # все запросы авторизованными
+    service_address: Optional[str]
+
+
 class Config(BaseModel):
     routes: List[Route]
+    auth: AuthConfig
 
 
 @dataclass()

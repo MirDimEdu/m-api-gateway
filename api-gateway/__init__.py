@@ -3,6 +3,7 @@ from fastapi import FastAPI, HTTPException, requests, responses
 import aiohttp
 
 from .resolve import get_resolver
+from .auth import get_authorizer
 from . import models
 
 
@@ -47,8 +48,9 @@ async def path(request: requests.Request):
     if not route:
         raise HTTPException(status_code=404, detail='No route found')
     if route.auth_required:
-        # TODO добавить запрос в security
-        pass
+        is_auth = await get_authorizer().is_auth(request_info)
+        if not is_auth:
+            return responses.Response(status_code=401, content='Not authorized')
     try:
         response_info = await make_destination_request(route.destination, request_info)
     except Exception as e:
