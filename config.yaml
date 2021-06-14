@@ -3,3 +3,5 @@ routes:
     allow_methods: [ GET ]
     prefix: /kek
     destination: http://google.com
+auth:
+  service_address: http://127.0.0.1:8080/is_auth

@@ -23,9 +23,9 @@ class ConfigManager:
         while True:
             try:
                 await self._update()
-                await asyncio.sleep(self._update_interval)
             except Exception as e:
                 print(f'Failed to update config, {repr(e)}')
+            await asyncio.sleep(self._update_interval)
 
     def get(self):
         return self._config
